@@ -13,11 +13,36 @@ the function below should be the only one in this file.
 #include "split.h"
 
 /* Add a prototype for a helper function here if you need */
+void splitHelperFunc(Node*& in, Node*& odds, Node*& evens);
 
 void split(Node*& in, Node*& odds, Node*& evens)
 {
-  /* Add code here */
-// WRITE YOUR CODE HERE
+  odds = nullptr;
+  evens = nullptr;
+
+  splitHelperFunc(in, odds, evens);
+
+  in = nullptr;
 }
 
 /* If you needed a helper function, write it here */
+
+void splitHelperFunc(Node*& in, Node*& odds, Node*& evens) {
+  if (in == nullptr) {
+    return;
+  }
+
+  Node* temp = in->next;
+  in->next = nullptr;
+
+  splitHelperFunc(temp, odds, evens);
+
+  if (in->value % 2 == 0) {
+    in->next = evens;
+    evens = in;
+  }
+  else {
+    in->next = odds;
+    odds = in;
+  }
+}
